@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbearia - Login</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #000000;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 30px;
+            height: 30px;
+            background-color: #1a1a1a;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .back-button:hover {
+            background-color: #333;
+        }
+        .container {
+            background-color: rgba(40, 40, 40, 0.95);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 800px;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+        .login-section {
+            padding: 40px;
+        }
+        h1 {
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #cccccc;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #1a1a1a;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            width: 100%;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #333;
+        }
+        .logout-btn {
+            background-color: #e74c3c;
+            margin-top: 10px;
+        }
+        .logout-btn:hover {
+            background-color: #c0392b;
+        }
+        .appointments {
+            background-color: #f9f9f9;
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 4px;
+        }
+        .appointment {
+            background-color: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #1a1a1a;
+        }
+        .appointment h3 {
+            color: #1a1a1a;
+            margin-top: 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .error {
+            color: #e74c3c;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-button" onclick="window.location.href='index_temp.html'">←</button>
+        <div class="login-section">
+            <h1>Barbearia Tech Barber's</h1>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Usuário</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" required>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button type="submit">Entrar</button>
+                    <button type="button" id="registerBtn" style="background-color: #2ecc71;">Cadastrar</button>
+                </div>
+                <div id="error" class="error"></div>
+            </form>
+
+            <div id="registerForm" style="display: none;">
+                <h2>Cadastro</h2>
+                <form id="newUserForm">
+                    <div class="form-group">
+                        <label for="newUsername">E-mail</label>
+                        <input type="email" id="newUsername" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="newPassword">Senha</label>
+                        <input type="password" id="newPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Nome Completo</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button type="submit" style="background-color: #2ecc71;">Confirmar</button>
+                        <button type="button" id="cancelRegister" style="background-color: #e74c3c;">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Database simulation
+        const clients = {
+            'joao@email.com': {
+                password: '123456',
+                name: 'João Silva',
+                appointments: [
+                    {
+                        id: 1,
+                        service: "Corte + Barba",
+                        date: "15/10/2023",
+                        time: "14:00",
+                        barber: "Zé",
+                        price: "R$ 60,00",
+                        duration: "1h",
+                        status: "Confirmado"
+                    }
+                ]
+            },
+            'maria@email.com': {
+                password: '123456',
+                name: 'Maria Souza',
+                appointments: [
+                    {
+                        id: 2,
+                        service: "Corte Feminino",
+                        date: "16/10/2023",
+                        time: "10:30",
+                        barber: "Marcos",
+                        price: "R$ 45,00",
+                        duration: "45min",
+                        status: "Confirmado"
+                    },
+                    {
+                        id: 3,
+                        service: "Hidratação",
+                        date: "20/10/2023",
+                        time: "16:00",
+                        barber: "Ana",
+                        price: "R$ 35,00",
+                        duration: "30min",
+                        status: "Pendente"
+                    }
+                ]
+            }
+        };
+
+        // Display client appointments
+        function displayAppointments(clientEmail) {
+            const container = document.getElementById('appointmentsList');
+            container.innerHTML = '';
+            
+            if (!clientEmail || !clients[clientEmail]) return;
+
+            const client = clients[clientEmail];
+            
+            if (client.appointments.length === 0) {
+                container.innerHTML = '<p>Nenhum agendamento encontrado.</p>';
+                return;
+            }
+
+            client.appointments.forEach(appt => {
+                const div = document.createElement('div');
+                div.className = 'appointment';
+                div.innerHTML = `
+                    <h3>${appt.service}</h3>
+                    <p><strong>Data:</strong> ${appt.date} às ${appt.time}</p>
+                    <p><strong>Barbeiro:</strong> ${appt.barber}</p>
+                    <p><strong>Preço:</strong> ${appt.price}</p>
+                    <p><strong>Duração:</strong> ${appt.duration}</p>
+                    <p><strong>Status:</strong> <span class="status-${appt.status.toLowerCase()}">${appt.status}</span></p>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Handle login form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorElement = document.getElementById('error');
+
+            // Check if client exists
+            if (clients[username] && clients[username].password === password) {
+                errorElement.textContent = '';
+                localStorage.setItem('loggedInClient', username);
+                updateUI(true);
+            } else {
+                errorElement.textContent = 'E-mail ou senha incorretos';
+            }
+        });
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('loggedInClient');
+            updateUI(false);
+        }
+
+        // Update UI based on login state
+        function updateUI(isLoggedIn) {
+            const loginForm = document.getElementById('loginForm');
+            const appointmentsSection = document.querySelector('.appointments');
+            const loggedInClient = localStorage.getItem('loggedInClient');
+
+            if (isLoggedIn && loggedInClient) {
+                loginForm.style.display = 'none';
+                appointmentsSection.style.display = 'block';
+                document.querySelector('h1').textContent = `Bem-vindo, ${clients[loggedInClient].name}`;
+                
+                // Add logout button if not already present
+                if (!document.getElementById('logoutBtn')) {
+                    const logoutBtn = document.createElement('button');
+                    logoutBtn.id = 'logoutBtn';
+                    logoutBtn.className = 'logout-btn';
+                    logoutBtn.textContent = 'Sair';
+                    logoutBtn.onclick = logout;
+                    appointmentsSection.parentNode.insertBefore(logoutBtn, appointmentsSection.nextSibling);
+                }
+                
+                displayAppointments(loggedInClient);
+            } else {
+                loginForm.style.display = 'block';
+                appointmentsSection.style.display = 'none';
+                document.querySelector('h1').textContent = 'Barbearia Tech Barber\'s';
+                const logoutBtn = document.getElementById('logoutBtn');
+                if (logoutBtn) logoutBtn.remove();
+            }
+        }
+
+        // Register new client
+        document.getElementById('registerBtn').addEventListener('click', function() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'block';
+        });
+
+        document.getElementById('cancelRegister').addEventListener('click', function() {
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+        });
+
+        document.getElementById('newUserForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('newUsername').value;
+            const password = document.getElementById('newPassword').value;
+            const name = document.getElementById('name').value;
+
+            if (clients[email]) {
+                document.getElementById('error').textContent = 'E-mail já cadastrado';
+                return;
+            }
+
+            clients[email] = {
+                password: password,
+                name: name,
+                appointments: []
+            };
+
+            document.getElementById('error').textContent = 'Cadastro realizado com sucesso!';
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('newUserForm').reset();
+        });
+
+        // Check login state on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const loggedInClient = localStorage.getItem('loggedInClient');
+            updateUI(!!loggedInClient);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbearia Tech Barber's </title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        header {
+            background-color: #222;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .agendamento {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+        
+        h1 {
+            color: #d4af37;
+            margin-bottom: 10px;
+        }
+        
+        h2 {
+            margin-bottom: 20px;
+            color: #d4af37;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        select, input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        button {
+            background-color: #d4af37;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #c9a227;
+        }
+        
+        .servicos, .profissionais, .horarios {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .servico-option, .profissional-option, .horario-option {
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .servico-option:hover, .profissional-option:hover, .horario-option:hover {
+            border-color: #d4af37;
+            background-color: #f9f9f9;
+        }
+        
+        .servico-option.selected, .profissional-option.selected, .horario-option.selected {
+            background-color: #d4af37;
+            color: white;
+            border-color: #d4af37;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Barbearia Tech Barber's</h1>
+<p>Agende seu horário com facilidade</p>
+<button class="Login" onclick="window.location.href=window.location.href='login.html'">Login</button>
+          
+        </div>
+    </header>
+    
+    <main class="container">
+        <section class="agendamento">
+            <h2>Agendamento Online</h2>
+            
+            <div class="form-group">
+                <label for="servico">Serviço:</label>
+                <div class="servicos">
+                    <div class="servico-option" data-value="corte">Corte de Cabelo</div>
+                    <div class="servico-option" data-value="barba">Barba</div>
+                    <div class="servico-option" data-value="completo">Corte + Barba</div>
+                    <div class="servico-option" data-value="pezinho">Pezinho</div>
+                </div>
+                <input type="hidden" id="servico" name="servico" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="profissional">Profissional:</label>
+                <div class="profissionais">
+                    <div class="profissional-option" data-value="joao">João (Barbeiro Sênior)</div>
+                    <div class="profissional-option" data-value="carlos">Carlos (Especialista em Barba)</div>
+                    <div class="profissional-option" data-value="marcos">Marcos (Estilista)</div>
+                </div>
+                <input type="hidden" id="profissional" name="profissional" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="data">Data:</label>
+                <input type="date" id="data" name="data" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="horario">Horário:</label>
+                <div class="horarios">
+                    <div class="horario-option" data-value="09:00">09:00</div>
+                    <div class="horario-option" data-value="10:00">10:00</div>
+                    <div class="horario-option" data-value="11:00">11:00</div>
+                    <div class="horario-option" data-value="14:00">14:00</div>
+                    <div class="horario-option" data-value="15:00">15:00</div>
+                    <div class="horario-option" data-value="16:00">16:00</div>
+                    <div class="horario-option" data-value="17:00">17:00</div>
+                </div>
+                <input type="hidden" id="horario" name="horario" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="nome">Seu Nome:</label>
+                <input type="text" id="nome" name="nome" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="telefone">Telefone:</label>
+                <input type="tel" id="telefone" name="telefone" required>
+            </div>
+            
+            <button type="button" id="agendar">Agendar Horário</button>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Seleção de serviço
+            const servicoOptions = document.querySelectorAll('.servico-option');
+            servicoOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    servicoOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    document.getElementById('servico').value = this.getAttribute('data-value');
+                });
+            });
+            
+            // Seleção de profissional
+            const profissionalOptions = document.querySelectorAll('.profissional-option');
+            profissionalOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    profissionalOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    document.getElementById('profissional').value = this.getAttribute('data-value');
+                });
+            });
+            
+            // Seleção de horário
+            const horarioOptions = document.querySelectorAll('.horario-option');
+            horarioOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    horarioOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    document.getElementById('horario').value = this.getAttribute('data-value');
+                });
+            });
+            
+            // Botão de agendamento
+            document.getElementById('agendar').addEventListener('click', function() {
+                const servico = document.getElementById('servico').value;
+                const profissional = document.getElementById('profissional').value;
+                const data = document.getElementById('data').value;
+                const horario = document.getElementById('horario').value;
+                const nome = document.getElementById('nome').value;
+                const telefone = document.getElementById('telefone').value;
+                
+                if (!servico || !profissional || !data || !horario || !nome || !telefone) {
+                    alert('Por favor, preencha todos os campos!');
+                    return;
+                }
+                
+                // Simulação de envio do agendamento
+                alert(`Agendamento confirmado!\n\nServiço: ${servico}\nProfissional: ${profissional}\nData: ${data} às ${horario}\nNome: ${nome}\nTelefone: ${telefone}`);
+            });
+            
+            // Configuração mínima da data (hoje em diante)
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('data').setAttribute('min', today);
+        });
+    </script>
+</body>
+</html>

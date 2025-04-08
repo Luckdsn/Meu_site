@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbearia Tech Barber's</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: black; /* Changed background color to black */
+            color: white; /* Default text color to white */
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center; 
+            background: #333;
+            color: #fff;
+            padding: 10px 20px; 
+        }
+        h1 {
+            font-size: 2.5em; 
+            font-weight: bold; 
+            color: #ffcc00; 
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        h2 {
+            color: white; /* Set h2 font color to white */
+        }
+        nav {
+            display: flex;
+        }
+        nav button {
+            margin: 0 10px;
+            padding: 15px 25px; 
+            background: #007bff; 
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px; 
+        }
+        nav button:hover {
+            background: #0056b3; 
+        }
+        .services {
+            padding: 20px;
+            background-color: rgb(0, 0, 0); 
+            border: 1px solid #000000; 
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); 
+        }
+        footer {
+            background: #333;
+            color: #fff; 
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        .mini-menu {
+            display: none; 
+            position: absolute;  
+            top: 80px;
+            right: 20px; 
+            background-color: white;
+            border: 1px solid #ccc;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1; 
+            border-radius: 5px; /* Added rounded corners */
+        }
+        .mini-menu ul {
+            list-style-type: none; 
+            padding: 10px; 
+            margin: 0; 
+        }
+        .mini-menu li {
+            margin: 5px 0; 
+        }
+        .mini-menu li a {
+            text-decoration: none; /* Remove underline */
+            color: #007bff; /* Link color */
+            padding: 5px 10px; /* Padding for links */
+            display: block; /* Make the entire area clickable */
+        }
+        .mini-menu li a:hover {
+            background-color: #f0f0f0; /* Background on hover */
+            border-radius: 3px; /* Rounded corners on hover */
+        }
+        /* Adjusting the margin of the About Us section to raise it */
+        .about-us-section {
+            margin-top: -50px; /* Raise the section by 50 pixels */
+            display: flex; /* Use flexbox for layout */
+            align-items: center; /* Center items vertically */
+        }
+        /* Adding margin to lower the image */
+        .about-us-image {
+            margin-top: 80px; /* Lower the image by 80 pixels */
+            margin-right: 20px; /* Space between image and text */
+            width: 50%; /* Set image width */
+            height: auto; /* Maintain aspect ratio */
+            border-radius: 10px; /* Rounded corners */
+            animation: fadeIn 2s; /* Fade-in animation */
+        }
+        .address {
+            margin-top: 10px; /* Space between text and address */
+            font-size: 2em; /* Adjust font size for address */
+            color: #ffcc00; /* Address color */
+        }
+    </style>
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('contact-menu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+        window.onclick = function(event) {
+            const menu = document.getElementById('contact-menu');
+            if (event.target !== menu && event.target.closest('button') === null) {
+                menu.style.display = "none";
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Barbearia Tech Barber's</h1>
+        <nav>
+            <button onclick="window.location.href='agendamento.html'">Serviços</button>
+            <button onclick="toggleMenu()">Contato</button>
+            <button onclick="window.location.href='login.html'">Login</button>
+        </nav>
+    </header>
+    <main>
+        <section class="about-us-section">
+             <img src="barb.jpg" alt="Barbearia" class="about-us-image"> <!-- Added image with rounded corners -->
+             <div>
+                 <h2 style="font-size: 6.5em;">Sobre nós</h2>
+                 <p style="font-size: 4.2em;">Oferecemos uma variedade de cortes de cabelo, aparos de barba e serviços de qualidade.
+                     <br>Nosso espaço é projetado para proporcionar conforto e relaxamento,  
+                     <br>com uma equipe de barbeiros experientes prontos para atender suas necessidades.  
+                     <br>Na Barbearia Tech Barber's, nossa missão é proporcionar uma experiência única e relaxante, 
+                     <br>com profissionais qualificados prontos para atender suas necessidades de estilo e cuidado pessoal. 
+                 </p>
+                 <div class="address">Endereço: Rua Exemplo, 123, Cidade, Estado</div> <!-- Added address below the text -->
+             </div>
+        </section>
+        <section class="services">
+            <h2>Serviços</h2>
+            <p>Oferecemos uma variedade de serviços para atender suas necessidades de estilo e cuidado pessoal.</p>
+        </section>
+        <section id="contact-menu" class="mini-menu">
+            <ul>
+                <li><a href="https://wa.me/yourwhatsappnumber" target="_blank">WhatsApp</a></li>
+                <li><a href="tel:+1234567890">Telefone</a></li>
+                <li><a href="agendamento.html">Agendamento</a></li>
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Barbearia Tech Barber's. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>
